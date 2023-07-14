@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class PEMService {
 
+    Repository repo =Repository.getRepository();
     private  Scanner in= new Scanner(System.in);
     private int choice;
     public void showMenu(){
@@ -85,8 +86,9 @@ public class PEMService {
     }
 
     private void onAddCategory() {
-        System.out.println("adding categories");
-        //TODO
+        System.out.println("Enter the categories Name");
+        String catName=in.nextLine();
+        Category cat=new Category(catName);
     }
     private void onExpenseEntry() {
         System.out.println("expense Entry");
