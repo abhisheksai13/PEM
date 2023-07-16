@@ -1,7 +1,10 @@
 package module.first;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class PEMService {
 
@@ -15,22 +18,18 @@ public class PEMService {
                 case 1:
                     //TODO for adding categories
                     onAddCategory();
-                    System.out.println("Enter categories.......");
                     pressAnyKeyToContinue();
                     break;
 
                 case 2:
-                    //TODO for category List
                     onCategoryList();
                     pressAnyKeyToContinue();
                     break;
                 case 3:
-                    //TODO for expense entry
                     onExpenseEntry();
                     pressAnyKeyToContinue();
                     break;
                 case 4:
-                    //TODO for expense entry
                     onExpenseList();
                     pressAnyKeyToContinue();
                     break;
@@ -86,21 +85,63 @@ public class PEMService {
     }
 
     private void onAddCategory() {
+        // so when the user enters his choic 1 the enter enter is taken as a choice so we have to use a dummy variable
+        in.nextLine();
         System.out.println("Enter the categories Name");
         String catName=in.nextLine();
         Category cat=new Category(catName);
+        repo.catList.add(cat);
+        System.out.println("Success: Category added");
     }
     private void onExpenseEntry() {
-        System.out.println("expense Entry");
-        //TODO
+        System.out.println("Enter the details for expense Entry");
+        onCategoryList();
+        System.out.print("Choose Category");
+        int catchoice=in.nextInt();
+        Category selectedCat =repo.catList.get(catchoice-1);
+        System.out.println("My Cat choice : "+ selectedCat.getName());
+
+        System.out.println("Enter amount: ");
+        Float amount= in.nextFloat();
+
+        System.out.println("Enter Remark: ");
+        in.nextLine();
+        String remark=in.nextLine();
+
+        //TODO date has to be taken from user
+        Date date=new Date();
+
+        //Add expense detail in expense obj
+
+        Expense exp= new Expense();
+        exp.setCategoryId(selectedCat.getCategoryId());
+        exp.setAmount(amount);
+        exp.setRemark(remark);
+        exp.setDate(date);
+
+        //store exp object in repo
+        repo.expList.add(exp);
+        System.out.println("Success: Expense added");
     }
 
     public void onExpenseList() {
+        System.out.println("Expense List");
+        List<Expense> expList=repo.expList;
+        for(int i=0;i<expList.size();i++){
+            Expense exp=expList.get(i);
+            String catName=getCategoryNameByID(exp.getCategoryId());
+            System.out.println((i+1)+". "+catName+", "+exp.getAmount()+", "+exp.getRemark()+", "+exp.getDate());
+
+        }
     }
 
     private void onCategoryList() {
         System.out.println("category List");
-        //TODO
+        List<Category> clist=repo.catList;
+        for(int i=0;i<clist.size();i++){
+            Category c= clist.get(i);
+            System.out.println((i+1)+". "+c.getName()+", ID:  "+c.getCategoryId());
+        }
     }
     private void onMonthlyExpenseEntry() {
         System.out.println("monthly Expense entry");
@@ -115,6 +156,14 @@ public class PEMService {
         System.out.println("categorized Expense entry");
     }
 
+    String getCategoryNameByID(Long categoryID){
+        for(Category c: repo.catList){
+            if(c.getCategoryId().equals(categoryID)){
+                return c.getName();
+            }
+        }
+        return null;
+    }
     public void exit(){
         System.exit(0);
     }
