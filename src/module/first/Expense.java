@@ -21,6 +21,13 @@ public class Expense {
         this.remark = remark;
     }
 
+    public Expense(Long categoryId, float v, Date stringToDate, String s) {
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+        this.remark = remark;
+    }
+
     public Long getExpenseId() {
         return expenseId;
     }

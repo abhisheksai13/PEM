@@ -11,6 +11,10 @@ public class PEMService {
     Repository repo =Repository.getRepository();
     private  Scanner in= new Scanner(System.in);
     private int choice;
+
+    public PEMService(){
+        prepareSampleData();
+    }
     public void showMenu(){
         while(true){
             printMenu();
@@ -171,6 +175,62 @@ public class PEMService {
         System.exit(0);
     }
 
+
+    public void prepareSampleData(){
+
+        Category catParty=new Category("Party");
+        delay();
+        Category catShopping =new Category("Shopping");
+        delay();
+        Category catGift =new Category("Gift");
+
+        repo.catList.add(catGift);
+        repo.catList.add(catParty);
+        repo.catList.add(catShopping);
+
+        //JAN 2016
+        Expense e1 =new Expense(catParty.getCategoryId(),1000.0F,DateUtil.stringToDate("01/01/2016"),"N/A");
+        Expense e2 =new Expense(catParty.getCategoryId(),2000.0F,DateUtil.stringToDate("25/01/2016"),"N/A");
+
+        //FEB 2016
+        Expense e3 =new Expense(catGift.getCategoryId(),1000.0F,DateUtil.stringToDate("01/02/2016"),"gift");
+        Expense e4 =new Expense(catGift.getCategoryId(),1500.0F,DateUtil.stringToDate("20/02/2016"),"gift 2nd");
+
+        //MAR 2016
+        Expense e5 =new Expense(catShopping.getCategoryId(),1000.0F,DateUtil.stringToDate("01/03/2016"),"Shop#1");
+        Expense e6 =new Expense(catShopping.getCategoryId(),1000.0F,DateUtil.stringToDate("15/03/2016"),"Shop#2");
+
+        //JAN 2017
+        Expense e7 =new Expense(catParty.getCategoryId(),1000.0F,DateUtil.stringToDate("15/01/2017"),"Party#17#2");
+
+        //FEB17
+        Expense e8 =new Expense(catShopping.getCategoryId(),1000.0F,DateUtil.stringToDate("15/02/2017"),"Shop#17#2");
+
+        //MAR17
+        Expense e9 =new Expense(catGift.getCategoryId(),1000.0F,DateUtil.stringToDate("15/03/2017"),"GIFT#2");
+
+
+        repo.expList.add(e1);
+        repo.expList.add(e2);
+        repo.expList.add(e3);
+        repo.expList.add(e4);
+        repo.expList.add(e5);
+        repo.expList.add(e6);
+        repo.expList.add(e7);
+        repo.expList.add(e8);
+        repo.expList.add(e9);
+
+
+
+    }
+
+    private void delay(){
+        try {
+            Thread.sleep(10);
+        }catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+    }
 
 
 }
